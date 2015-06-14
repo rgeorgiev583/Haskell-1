@@ -4,16 +4,20 @@ isInLanguage language word  =  validate rules word 0 (getFirstLength word (head 
         rules = map (\rule -> head rule) (split "^n" language)
 
 
-validate []    [] length expectedLength  =  True
-validate [] word  length expectedLength  =  False
-validate rules [] length expectedLength  =  False
-validate rules word length expectedLength
-    | length < expectedLength  =
-        if head word /= head rules then
-            False
-        else
-            validate rules (tail word) (length + 1) expectedLength
-    | otherwise  =  validate (tail rules) word 0 expectedLength
+validate []    []   expectedLength  =  True
+validate []    word expectedLength  =  False
+validate rules word expectedLength  =  helper rules word (head word) 0 expectedLength where
+    helper rules word character length expectedLength
+        | length < expectedLength  =
+            if head word /= character then
+                False
+            else
+                helper rules (tail word) character (length + 1) expectedLength
+        | otherwise  =
+            if not (null word) && head word == character then
+                False
+            else
+                validate (tail rules) word expectedLength
 
 
 getFirstLength []    letter  =  0
