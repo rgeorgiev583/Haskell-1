@@ -1,4 +1,3 @@
-isInLanguage :: [Char] -> [Char] -> Bool
 isInLanguage language word  =  validate rules word (getFirstLength word (head word))
     where
         rules = map (\rule -> head rule) (split "^n" language)
@@ -26,7 +25,6 @@ getFirstLength word  letter
     | otherwise              =  1 + getFirstLength (tail word) letter
 
 
-split :: Eq a => [a] -> [a] -> [[a]]
 split [] string     =  [string]
 split delimiter []  =  []
 split delimiter string
@@ -36,7 +34,6 @@ split delimiter string
         position = find delimiter string
 
 
-find :: Eq a => [a] -> [a] -> Int
 find needle haystack = helper needle haystack 0 where
     helper needle [] position    =  -1
     helper needle haystack position
@@ -44,7 +41,6 @@ find needle haystack = helper needle haystack 0 where
         | otherwise              =  helper needle (tail haystack) (position + 1)
 
 
-match :: Eq a => [a] -> [a] -> Bool
 match []     haystack = True
 match needle []       = False
 match needle haystack
