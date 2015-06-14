@@ -9,10 +9,11 @@ split delimiter string
 
 
 find :: Eq a => [a] -> [a] -> Int
-find needle []               =  -1
-find needle haystack
-    | match needle haystack  =  0
-    | otherwise              =  1 + find needle (tail haystack)
+find needle haystack = helper needle haystack 0 where
+    helper needle [] position    =  -1
+    helper needle haystack position
+        | match needle haystack  =  position
+        | otherwise              =  helper needle (tail haystack) (position + 1)
 
 
 match :: Eq a => [a] -> [a] -> Bool
