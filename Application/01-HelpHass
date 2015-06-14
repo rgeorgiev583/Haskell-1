@@ -4,13 +4,14 @@ fastestRoute routes = shortestPathBFS routes 'L' ['H'] ['H'] where
     shortestPathBFS graph end queue path
         | null queue    =  []
         | elem end adjacencies  =  path ++ [end]
-        | otherwise     =  head (filter (\next -> not (null next)) (map reccall adjacencies))
+        | otherwise     =  if null list then [] else head list
         where
             vertex         =  head queue
             adjacencies    =  adjacentVertices graph vertex
             newQueue next  =  if elem next path then tail queue else (tail queue) ++ [next]
             newPath  next  =  if elem next path then path       else path ++ [next]
             reccall  next  =  shortestPathBFS graph end (newQueue next) (newPath next)
+            list           =  filter (\next -> not (null next)) (map reccall adjacencies)
 
 
 adjacentVertices :: Eq a => [(a, a)] -> a -> [a]
