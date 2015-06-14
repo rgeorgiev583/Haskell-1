@@ -1,5 +1,5 @@
 isInLanguage :: [Char] -> [Char] -> Bool
-isInLanguage language word  =  validate rules word 0 (getFirstLength word (head word))
+isInLanguage language word  =  validate rules word (getFirstLength word (head word))
     where
         rules = map (\rule -> head rule) (split "^n" language)
 
