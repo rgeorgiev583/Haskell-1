@@ -22,3 +22,11 @@ match needle []       = False
 match needle haystack
     | head needle /= head haystack  =  False
     | otherwise                     =  match (tail needle) (tail haystack)
+
+
+reverseMatch :: Eq a => [a] -> [a] -> Bool
+reverseMatch []     haystack = True
+reverseMatch needle []       = False
+reverseMatch needle haystack
+    | last needle /= last haystack  =  False
+    | otherwise                     =  match (init needle) (init haystack)
