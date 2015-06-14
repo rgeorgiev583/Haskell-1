@@ -29,4 +29,4 @@ reverseMatch []     haystack = True
 reverseMatch needle []       = False
 reverseMatch needle haystack
     | last needle /= last haystack  =  False
-    | otherwise                     =  match (init needle) (init haystack)
+    | otherwise                     =  reverseMatch (init needle) (init haystack)
