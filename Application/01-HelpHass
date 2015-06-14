@@ -1,4 +1,4 @@
-fastestRoute :: [(a, a)] -> [a]
+fastestRoute :: [(Char, Char)] -> [Char]
 fastestRoute [] = []
 fastestRoute routes = shortestPathBFS routes 'H' 'L' ['H'] ['H'] where
     shortestPathBFS graph start end queue path
@@ -12,7 +12,7 @@ fastestRoute routes = shortestPathBFS routes 'H' 'L' ['H'] ['H'] where
             reccall  next  =  shortestPathBFS graph next end (newQueue next) (newPath next)
 
 
-adjacentVertices :: [(a, a)] -> a -> [a]
+adjacentVertices :: Eq a => [(a, a)] -> a -> [a]
 adjacentVertices [] vertex = []
 adjacentVertices (edge : edges) vertex
     | fst edge == vertex  =  snd edge : adjacentVertices edges vertex
