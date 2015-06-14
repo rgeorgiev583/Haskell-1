@@ -2,9 +2,9 @@ fastestRoute routes = shortestPathBFS routes 'L' ['H'] ['H']
 
 
 shortestPathBFS graph end queue path
-    | null queue    =  []
+    | null queue            =  []
     | elem end adjacencies  =  path ++ [end]
-    | otherwise     =  if null list then [] else head list
+    | otherwise             =  if null list then [] else head list
     where
         vertex         =  head queue
         adjacencies    =  adjacentVertices graph vertex
