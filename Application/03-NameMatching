@@ -1,3 +1,8 @@
+-- Usage:  Load the source file in GHCi and enter the following input in the REPL to run the example tests:
+-- *Main> rememberedNameQuotient 1 1 ["Vetta", "Tess", "Lejetta"]
+-- *Main> rememberedNameQuotient 1 0 ["Jass", "Julietta", "Frass", "Qetta"]
+
+
 reverseMatch []     haystack        =  True
 reverseMatch needle []              =  False
 reverseMatch needle haystack
