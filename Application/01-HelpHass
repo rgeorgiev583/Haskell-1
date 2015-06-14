@@ -1,4 +1,4 @@
-fastestRoute :: [(a, a)] -> (a, a)
+fastestRoute :: [(a, a)] -> [a]
 fastestRoute [] = []
 fastestRoute routes = shortestPathBFS routes 'H' 'L' ['H'] ['H'] where
     shortestPathBFS graph start end queue path
