@@ -21,7 +21,7 @@ validate rules word expectedLength  =  helper rules word (head word) 0 expectedL
 
 getFirstLength []    letter  =  0
 getFirstLength word  letter
-    | (head word) /= letter  =  0
+    | head word /= letter    =  0
     | otherwise              =  1 + getFirstLength (tail word) letter
 
 
