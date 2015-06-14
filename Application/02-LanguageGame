@@ -1,3 +1,10 @@
+-- Usage:  Load the source file in GHCi and enter the following input in the REPL to run the example tests:
+-- *Main> isInLanguage "a^nb^n" "1122"
+-- *Main> isInLanguage "a^nb^n" "aabb"
+-- *Main> isInLanguage "a^nb^nc^n" "abb"
+-- *Main> isInLanguage "a^nb^nc^n" "aabbcc"
+
+
 isInLanguage language word  =  validate rules word (getFirstLength word (head word))
     where
         rules = map (\rule -> head rule) (split "^n" language)
