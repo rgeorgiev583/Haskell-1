@@ -17,5 +17,7 @@ rememberedNameQuotient maleNameCount femaleNameCount names
     | rememberedMales || rememberedFemales  =  50
     | otherwise                             =  0
     where
-        rememberedMales    =    maleNameCount > 0 && hasElementThatReverseMatches "ss"  names
-        rememberedFemales  =  femaleNameCount > 0 && hasElementThatReverseMatches "tta" names
+        rememberedMales    =    maleNameCount == 0 && not hasMales   ||   maleNameCount > 0 && hasMales
+        rememberedFemales  =  femaleNameCount == 0 && not hasFemales || femaleNameCount > 0 && hasFemales
+        hasMales           =  hasElementThatReverseMatches "ss"  names
+        hasFemales         =  hasElementThatReverseMatches "tta" names
