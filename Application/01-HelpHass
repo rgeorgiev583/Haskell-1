@@ -1,3 +1,8 @@
+-- Usage:  Load the source file in GHCi and enter the following input in the REPL to run the example tests:
+-- *Main> fastestRoute [('H', 'F'), ('F', 'L'), ('H', 'L')]
+-- *Main> fastestRoute [('H', 'A'), ('K', 'L'), ('S', 'K'), ('A', 'S')]
+
+
 fastestRoute routes = shortestPathBFS routes 'L' ['H'] ['H']
 
 
