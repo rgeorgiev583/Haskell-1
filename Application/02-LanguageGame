@@ -25,8 +25,8 @@ getFirstLength word  letter
     | otherwise              =  1 + getFirstLength (tail word) letter
 
 
-split [] string     =  [string]
-split delimiter []  =  []
+split [] string         =  [string]
+split delimiter []      =  []
 split delimiter string
     | position == -1    =  [string]
     | otherwise         =  take position string : split delimiter (drop (position + (length delimiter)) string)
@@ -34,15 +34,15 @@ split delimiter string
         position = find delimiter string
 
 
-find needle haystack = helper needle haystack 0 where
+find needle haystack             =  helper needle haystack 0 where
     helper needle [] position    =  -1
     helper needle haystack position
         | match needle haystack  =  position
         | otherwise              =  helper needle (tail haystack) (position + 1)
 
 
-match []     haystack = True
-match needle []       = False
+match []     haystack               =  True
+match needle []                     =  False
 match needle haystack
     | head needle /= head haystack  =  False
     | otherwise                     =  match (tail needle) (tail haystack)
