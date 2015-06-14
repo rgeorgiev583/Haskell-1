@@ -4,7 +4,7 @@ fastestRoute routes = shortestPathBFS routes 'H' 'L' ['H'] ['H'] where
     shortestPathBFS graph start end queue path
         | null queue    =  []
         | start == end  =  path
-        | otherwise     =  head (filter (\next -> not null next) (map reccall (adjacentVertices graph vertex)))
+        | otherwise     =  head (filter (\next -> not (null next)) (map reccall (adjacentVertices graph vertex)))
         where
             vertex         =  head queue
             newQueue next  =  if elem next path then tail queue else (tail queue) ++ [next]
