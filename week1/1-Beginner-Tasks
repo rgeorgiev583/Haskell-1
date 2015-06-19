@@ -40,3 +40,20 @@ convert "eur" "usd" sum = 1.13268 * sum
 convert "eur" "bgn" sum = 1.95589 * sum
 convert "bgn" "usd" sum = 0.579191 * sum
 convert "bgn" "eur" sum = 0.511265 * sum
+
+
+isTriangleList :: RealFloat a => [a] -> Bool
+isTriangleList [] = False
+isTriangleList [a] = False
+isTriangleList [a, b] = False
+isTriangleList [a, b, c] = a > 0 && b > 0 && c > 0 && a + b > c && b + c > a && a + c > b
+
+perimeterList :: RealFloat a => [a] -> a
+perimeterList [] = 0
+perimeterList (x : xs) = x + perimeterList xs
+
+areaList :: RealFloat a => [a] -> a
+areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
+    where p = (perimeter a b c) / 2
+
+
