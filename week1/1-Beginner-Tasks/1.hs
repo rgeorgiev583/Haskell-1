@@ -57,3 +57,9 @@ areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
     where p = (perimeter a b c) / 2
 
 
+head' [] = error "Cannot get the head of an empty list!"
+head' (x : xs) = x
+
+tail' [] = error "Cannot get the tail of an empty list!"
+tail' [x] = x
+tail' (x : xs) = tail' xs
