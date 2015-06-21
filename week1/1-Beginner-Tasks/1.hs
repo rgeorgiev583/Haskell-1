@@ -72,6 +72,7 @@ tail' []       = error "Cannot get the tail of an empty list!"
 tail' [x]      = []
 tail' (_ : xs) = xs
 
+
 last' :: [a] -> a
 last' []       = error "Cannot get the last element of an empty list!"
 last' [x]      = x
@@ -116,6 +117,7 @@ multLists _        []       = []
 multLists []       _        = []
 multLists (x : xs) (y : ys) = x * y : multLists xs ys
 
+
 number2string :: Int -> String
 number2string 0 = "0"
 number2string n
@@ -129,6 +131,7 @@ string2number ""         = 0
 string2number ('-' : cs) = -(string2number cs)
 string2number s          = digitChar (last s) + 10 * string2number (init s)
     where digitChar c = ord c - ord '0'
+
 
 isValidId :: String -> Bool
 isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, cd] = digitChar cd == ckdigit &&
