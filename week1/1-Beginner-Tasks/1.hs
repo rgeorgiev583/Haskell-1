@@ -58,8 +58,51 @@ areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
 
 
 head' [] = error "Cannot get the head of an empty list!"
-head' (x : xs) = x
+head' (x : _) = x
 
 tail' [] = error "Cannot get the tail of an empty list!"
-tail' [x] = x
-tail' (x : xs) = tail' xs
+tail' [x] = []
+tail' (_ : xs) = xs
+
+last' [] = error "Cannot get the last element of an empty list!"
+last' [x] = x
+last' (_ : xs) = last' xs
+
+double :: Num a => [a] -> [a]
+double [] = []
+double (x : xs) = 2 * x : double xs
+
+mult :: Num a => a -> [a] -> [a]
+mult n [] = []
+mult n (x : xs) = n * x : mult n xs
+
+nth :: Int -> [a] -> a
+nth n [] = error "Cannot get the n-th element of an empty list!"
+nth 0 (x : _) = x
+nth n (_ : xs) = nth (n - 1) xs
+
+member :: Eq a => a -> [a] -> Bool
+member n [] = False
+member n (x : xs)
+    | n == x = True
+    | otherwise = member n xs
+
+isFib :: Integral a => [a] -> Bool
+isFib [] = False
+isFib [a] = False
+isFib [a, b] = True
+isFib (a : b : c : xs) = a + b == c && isFib (b : c : xs)
+
+sum' :: Num a => [a] -> a
+sum' [] = 0
+sum' (x : xs) = x + sum' xs
+
+product' :: Num a => [a] -> a
+product' [] = 1
+product' (x : xs) = x * product' xs
+
+multLists :: Num a => [a] -> [a] -> [a]
+multLists [] [] = []
+multLists l [] = []
+multLists [] l = []
+multLists (x : xs) (y : ys) = x * y : multLists xs ys
