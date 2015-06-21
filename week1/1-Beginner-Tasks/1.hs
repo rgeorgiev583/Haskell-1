@@ -120,5 +120,5 @@ number2string n
 string2number :: String -> Int
 string2number "" = 0
 string2number ('-' : cs) = -(string2number cs)
-string2number s = digitChar (last s) + 10 * (string2number (init s))
+string2number s = digitChar (last s) + 10 * string2number (init s)
     where digitChar c = ord c - ord '0'
