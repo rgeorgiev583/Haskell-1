@@ -69,7 +69,6 @@ head' (x : _) = x
 
 tail' :: [a] -> [a]
 tail' []       = error "Cannot get the tail of an empty list!"
-tail' [x]      = []
 tail' (_ : xs) = xs
 
 
