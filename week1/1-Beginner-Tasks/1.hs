@@ -63,13 +63,16 @@ areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
 areaList     _     = error "Unknown polygon type!"
 
 
+head' :: [a] -> a
 head' [] = error "Cannot get the head of an empty list!"
 head' (x : _) = x
 
+tail' :: [a] -> [a]
 tail' [] = error "Cannot get the tail of an empty list!"
 tail' [x] = []
 tail' (_ : xs) = xs
 
+last' :: [a] -> a
 last' [] = error "Cannot get the last element of an empty list!"
 last' [x] = x
 last' (_ : xs) = last' xs
