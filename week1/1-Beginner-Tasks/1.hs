@@ -122,3 +122,26 @@ string2number "" = 0
 string2number ('-' : cs) = -(string2number cs)
 string2number s = digitChar (last s) + 10 * string2number (init s)
     where digitChar c = ord c - ord '0'
+
+isValidId :: String -> Bool
+isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, c] = d >= 1 && d <= 28 && m >= 1 && m <= 12 || d == 29 && (m == 1 || m >= 3 && m <= 12 || m == 2 && isLeapYear) || d == 30 && (m == 4 || m == 6 || m == 9 || m == 11) || d == 31 && (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) && digitChar c == ckdigit
+    where
+        digitChar c = ord c - ord '0'
+        yr = digitChar y1 * 10 + digitChar y2
+        mr = digitChar m1 * 10 + digitChar m2
+        y
+            | mr >= 20 && mr <= 32 = 1800 + yr
+            | mr >= 40 && mr <= 42 = 2000 + yr
+            | otherwise = 1900 + yr
+        m
+            | mr >= 20 && mr <= 32 = mr - 20
+            | mr >= 40 && mr <= 42 = mr - 40
+            | otherwise = mr
+        d = digitChar d1 * 10 + digitChar d2
+        isLeapYear = y `mod` 4 == 0 && (y `mod` 100 /= 0 || y `mod` 400 == 0)
+        cksum = (2 * digitChar y1 + 4 * digitChar y2 +
+                 8 * digitChar m1 + 5 * digitChar m2 +
+                 10 * digitChar d1 + 9 * digitChar d2 +
+                 7 * digitChar r1 + 3 * digitChar r2 + 6 * digitChar r3) `mod` 11
+        ckdigit = if cksum < 10 then cksum else 0
+isValidId s = False
