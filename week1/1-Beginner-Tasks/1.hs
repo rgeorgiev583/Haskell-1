@@ -131,7 +131,11 @@ string2number s          = digitChar (last s) + 10 * string2number (init s)
     where digitChar c = ord c - ord '0'
 
 isValidId :: String -> Bool
-isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, cd] = digitChar cd == ckdigit && d >= 1 && d <= 28 && m >= 1 && m <= 12 || d == 29 && (m == 1 || m >= 3 && m <= 12 || m == 2 && isLeapYear) || d == 30 && (m == 4 || m == 6 || m == 9 || m == 11) || d == 31 && (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, cd] = digitChar cd == ckdigit &&
+        (d >=  1 && d <= 28 && m >= 1 && m <= 12 ||
+         d == 29 && (m == 1 || m >= 3 && m <= 12 || m ==  2  && isLeapYear) ||
+         d == 30 && (m == 4 || m == 6 || m ==  9 || m == 11) ||
+         d == 31 && (m == 1 || m == 3 || m ==  5 || m ==  7  || m == 8      || m == 10 || m == 12))
     where
         digitChar c = ord c - ord '0'
         cksum = (2  * digitChar y1 + 4 * digitChar y2 +
