@@ -1,3 +1,5 @@
+import Data.Char
+
 even' :: Integral a => a -> Bool
 even' x = x `mod` 2 == 0
 
@@ -106,3 +108,17 @@ multLists [] [] = []
 multLists l [] = []
 multLists [] l = []
 multLists (x : xs) (y : ys) = x * y : multLists xs ys
+
+number2string :: Int -> String
+number2string 0 = "0"
+number2string n
+    | n < 0 = "-" ++ number2string (-n)
+    | n >= 1 && n <= 9 = [charDigit n]
+    | otherwise = number2string (n `quot` 10) ++ [charDigit (n `mod` 10)]
+        where charDigit n = chr (ord '0' + n)
+
+string2number :: String -> Int
+string2number "" = 0
+string2number ('-' : cs) = -(string2number cs)
+string2number s = digitChar (last s) + 10 * (string2number (init s))
+    where digitChar c = ord c - ord '0'
