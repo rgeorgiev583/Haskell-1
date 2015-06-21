@@ -34,6 +34,7 @@ calculate '+' a b = a + b
 calculate '-' a b = a - b
 calculate '*' a b = a * b
 calculate '/' a b = a / b
+calculate  _  _ _ = error "Unknown operation!"
 
 convert :: RealFloat a => String -> String -> a -> a
 convert "usd" "eur" sum = 0.882752 * sum
@@ -42,6 +43,7 @@ convert "eur" "usd" sum = 1.13268 * sum
 convert "eur" "bgn" sum = 1.95589 * sum
 convert "bgn" "usd" sum = 0.579191 * sum
 convert "bgn" "eur" sum = 0.511265 * sum
+convert   _     _    _  = error "Unknown currency!"
 
 
 isTriangleList :: RealFloat a => [a] -> Bool
@@ -49,6 +51,7 @@ isTriangleList [] = False
 isTriangleList [a] = False
 isTriangleList [a, b] = False
 isTriangleList [a, b, c] = a > 0 && b > 0 && c > 0 && a + b > c && b + c > a && a + c > b
+isTriangleList     _     = False
 
 perimeterList :: RealFloat a => [a] -> a
 perimeterList [] = 0
@@ -57,6 +60,7 @@ perimeterList (x : xs) = x + perimeterList xs
 areaList :: RealFloat a => [a] -> a
 areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
     where p = (perimeter a b c) / 2
+areaList     _     = error "Unknown polygon type!"
 
 
 head' [] = error "Cannot get the head of an empty list!"
