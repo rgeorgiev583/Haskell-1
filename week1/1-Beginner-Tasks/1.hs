@@ -79,25 +79,25 @@ double [] = []
 double (x : xs) = 2 * x : double xs
 
 mult :: Num a => a -> [a] -> [a]
-mult n [] = []
+mult _ [] = []
 mult n (x : xs) = n * x : mult n xs
 
 nth :: Int -> [a] -> a
-nth n [] = error "Cannot get the n-th element of an empty list!"
+nth _ [] = error "Cannot get the n-th element of an empty list!"
 nth 0 (x : _) = x
 nth n (_ : xs) = nth (n - 1) xs
 
 member :: Eq a => a -> [a] -> Bool
-member n [] = False
+member _ [] = False
 member n (x : xs)
     | n == x = True
     | otherwise = member n xs
 
 isFib :: Integral a => [a] -> Bool
 isFib [] = False
-isFib [a] = False
-isFib [a, b] = True
-isFib (a : b : c : xs) = a + b == c && isFib (b : c : xs)
+isFib [_] = False
+isFib [_, _] = True
+isFib (x : y : z : xs) = x + y == z && isFib (y : z : xs)
 
 sum' :: Num a => [a] -> a
 sum' [] = 0
@@ -109,8 +109,8 @@ product' (x : xs) = x * product' xs
 
 multLists :: Num a => [a] -> [a] -> [a]
 multLists [] [] = []
-multLists l [] = []
-multLists [] l = []
+multLists _ [] = []
+multLists [] _ = []
 multLists (x : xs) (y : ys) = x * y : multLists xs ys
 
 number2string :: Int -> String
@@ -148,7 +148,7 @@ isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, cd] = digitChar cd == ckdigit && 
             | otherwise = mr
         d = digitChar d1 * 10 + digitChar d2
         isLeapYear = y `mod` 4 == 0 && (y `mod` 100 /= 0 || y `mod` 400 == 0)
-isValidId s = False
+isValidId _ = False
 
 whatZodiacSignIs :: String -> String
 whatZodiacSignIs [_, _, m1, m2, d1, d2, _, _, _, _]
@@ -173,4 +173,4 @@ whatZodiacSignIs [_, _, m1, m2, d1, d2, _, _, _, _]
                 | mr >= 40 && mr <= 42 = mr - 40
                 | otherwise = mr
             d = digitChar d1 * 10 + digitChar d2
-whatZodiacSignIs s = error "Invalid string format: there is no such personal ID number!"
+whatZodiacSignIs _ = error "Invalid string format: there is no such personal ID number!"
