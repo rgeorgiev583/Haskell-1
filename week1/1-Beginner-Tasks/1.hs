@@ -145,3 +145,28 @@ isValidId [y1, y2, m1, m2, d1, d2, r1, r2, r3, cd] = digitChar cd == ckdigit && 
         d = digitChar d1 * 10 + digitChar d2
         isLeapYear = y `mod` 4 == 0 && (y `mod` 100 /= 0 || y `mod` 400 == 0)
 isValidId s = False
+
+whatZodiacSignIs :: String -> String
+whatZodiacSignIs [_, _, m1, m2, d1, d2, _, _, _, _]
+    | d >= 21 && d <= 31 && m == 3 || d >= 1 && d <= 20 && m == 4 = "Aries"
+    | d >= 21 && d <= 30 && m == 4 || d >= 1 && d <= 21 && m == 5 = "Taurus"
+    | d >= 22 && d <= 31 && m == 5 || d >= 1 && d <= 21 && m == 6 = "Gemini"
+    | d >= 22 && d <= 30 && m == 6 || d >= 1 && d <= 22 && m == 7 = "Cancer"
+    | d >= 23 && d <= 31 && m == 7 || d >= 1 && d <= 22 && m == 8 = "Leo"
+    | d >= 23 && d <= 31 && m == 8 || d >= 1 && d <= 23 && m == 9 = "Virgo"
+    | d >= 24 && d <= 30 && m == 9 || d >= 1 && d <= 23 && m == 10 = "Libra"
+    | d >= 24 && d <= 31 && m == 10 || d >= 1 && d <= 22 && m == 11 = "Scorpio"
+    | d >= 23 && d <= 30 && m == 11 || d >= 1 && d <= 21 && m == 12 = "Sagittarius"
+    | d >= 22 && d <= 31 && m == 12 || d >= 1 && d <= 20 && m == 1 = "Capricorn"
+    | d >= 21 && d <= 31 && m == 1 || d >= 1 && d <= 19 && m == 2 = "Aquarius"
+    | d >= 20 && d <= 29 && m == 2 || d >= 1 && d <= 20 && m == 3 = "Pisces"
+    | otherwise = error "Invalid date: there is no such month/day number!"
+        where
+            digitChar c = ord c - ord '0'
+            mr = digitChar m1 * 10 + digitChar m2
+            m
+                | mr >= 20 && mr <= 32 = mr - 20
+                | mr >= 40 && mr <= 42 = mr - 40
+                | otherwise = mr
+            d = digitChar d1 * 10 + digitChar d2
+whatZodiacSignIs s = error "Invalid string format: there is no such personal ID number!"
