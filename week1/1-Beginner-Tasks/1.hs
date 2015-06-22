@@ -227,3 +227,18 @@ group' l  = initItem : group' (drop erl l)
             | otherwise = 1 + eqRunLen (y : xs)
         erl      = eqRunLen l
         initItem = if erl == 1 then Left (head l) else Right (take erl l)
+
+
+pyths :: Integer -> Integer -> [(Integer, Integer, Integer)]
+pyths from to
+    | from == to + 1 = []
+    | otherwise      = helper from to ++ pyths (from + 1) to
+        where
+            helper a b
+                | c > to    = []
+                | isPyth    = (a, b, c) : helper a (b + 1)
+                | otherwise = helper a (b + 1)
+                    where
+                        sqrtSum = sqrt (fromInteger (a ^ 2 + b ^ 2))
+                        c       = truncate sqrtSum
+                        isPyth  = fromInteger c == sqrtSum
