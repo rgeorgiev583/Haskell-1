@@ -307,5 +307,12 @@ divisibles n (x : xs)
 filterBy :: (a -> Bool) -> [a] -> [a]
 filterBy f [] = []
 filterBy f (x : xs)
-    | f x       = x : filterBy xs
-    | otherwise =     filterBy xs
+    | f x       = x : filterBy f xs
+    | otherwise =     filterBy f xs
+
+
+oddsUsingFilter :: Integral a => [a] -> [a]
+oddsUsingFilter l = filterBy odd' l
+
+divisiblesUsingFilter :: Integral a => a -> [a] -> [a]
+divisiblesUsingFilter n l = filterBy (\x -> x `mod` n == 0) l
