@@ -290,3 +290,22 @@ fibonaccisUsingMap l = applyToAll (\x -> fib x 0 1) l
             | n == 0    = a
             | n == 1    = b
             | otherwise = fib (n - 1) b (a + b)
+
+
+odds :: Integral a => [a] -> [a]
+odds [] = []
+odds (x : xs)
+    | odd' x     = x : odds xs
+    | otherwise  =     odds xs
+
+divisibles :: Integral a => a -> [a] -> [a]
+divisibles n [] = []
+divisibles n (x : xs)
+    | x `mod` n == 0 = x : divisibles n xs
+    | otherwise      =     divisibles n xs
+
+filterBy :: (a -> Bool) -> [a] -> [a]
+filterBy f [] = []
+filterBy f (x : xs)
+    | f x       = x : filterBy xs
+    | otherwise =     filterBy xs
