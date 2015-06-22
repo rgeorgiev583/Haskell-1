@@ -246,3 +246,25 @@ pyths from to
 
 multiplyBy :: Num a => a -> (a -> a)
 multiplyBy n = (* n)
+
+
+lastDigits :: Integral a => [a] -> [a]
+lastDigits []       = []
+lastDigits (x : xs) = x `mod` 10 : lastDigits xs
+
+stringsToIntegers :: [String] -> [Int]
+stringsToIntegers []       = []
+stringsToIntegers (x : xs) = string2number x : stringsToIntegers xs
+
+stringsToIntegers' :: [String] -> [Int]
+stringsToIntegers' []       = []
+stringsToIntegers' (x : xs) = (read x :: Int) : stringsToIntegers' xs
+
+fibonaccis :: Integral a => [a] -> [a]
+fibonaccis []       = []
+fibonaccis (x : xs) = fib x 0 1 : fibonaccis xs
+    where
+        fib n a b
+            | n == 0    = a
+            | n == 1    = b
+            | otherwise = fib (n - 1) b (a + b)
