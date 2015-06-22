@@ -316,3 +316,13 @@ oddsUsingFilter l = filterBy odd' l
 
 divisiblesUsingFilter :: Integral a => a -> [a] -> [a]
 divisiblesUsingFilter n l = filterBy (\x -> x `mod` n == 0) l
+
+reduce :: (a -> a -> a) -> a -> [a] -> a
+reduce f s []       = s
+reduce f s (x : xs) = reduce f (f s x) xs
+
+productUsingApply :: Num a => [a] -> a
+productUsingApply l = reduce (*) 1 l
+
+concat' :: [[a]] -> [a]
+concat' l = reduce concatenateLists [] l
