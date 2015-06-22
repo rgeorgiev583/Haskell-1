@@ -127,7 +127,7 @@ number2string n
 string2number :: String -> Int
 string2number ""         = 0
 string2number ('-' : cs) = -(string2number cs)
-string2number s          = digitChar (last s) + 10 * string2number (init s)
+string2number s          = digitChar (last' s) + 10 * string2number (init' s)
     where digitChar c = ord c - ord '0'
 
 
@@ -219,7 +219,7 @@ unzip' l = (unzipLeft l, unzipRight l)
 -- TODO: Add support for returning a flat list (do not know how to return more than one type.)
 group' :: Eq a => [a] -> [[a]]
 group' [] = []
-group' l  = take erl l : group' (drop erl l)
+group' l  = take' erl l : group' (drop' erl l)
     where
         eqRunLen []  = 0
         eqRunLen [_] = 1
