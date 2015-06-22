@@ -273,3 +273,20 @@ fibonaccis (x : xs) = fib x 0 1 : fibonaccis xs
 applyToAll :: (a -> b) -> [a] -> [b]
 applyToAll f []       = []
 applyToAll f (x : xs) = f x : applyToAll f xs
+
+lastDigitsUsingMap :: Integral a => [a] -> [a]
+lastDigitsUsingMap l = applyToAll (`mod` 10) l
+
+stringsToIntegersUsingMap :: [String] -> [Int]
+stringsToIntegersUsingMap l = applyToAll string2number l
+
+stringsToIntegersUsingMap' :: [String] -> [Int]
+stringsToIntegersUsingMap' l = applyToAll (\x -> read x :: Int) l
+
+fibonaccisUsingMap :: Integral a => [a] -> [a]
+fibonaccisUsingMap l = applyToAll (\x -> fib x 0 1) l
+    where
+        fib n a b
+            | n == 0    = a
+            | n == 1    = b
+            | otherwise = fib (n - 1) b (a + b)
