@@ -270,6 +270,6 @@ fibonaccis (x : xs) = fib x 0 1 : fibonaccis xs
             | otherwise = fib (n - 1) b (a + b)
 
 
-applyToAll :: (a -> a) -> [a] -> [a]
+applyToAll :: (a -> b) -> [a] -> [b]
 applyToAll f []       = []
 applyToAll f (x : xs) = f x : applyToAll f xs
