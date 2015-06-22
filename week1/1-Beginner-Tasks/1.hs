@@ -216,17 +216,16 @@ unzip' l = (unzipLeft l, unzipRight l)
         unzipRight []            = []
         unzipRight ((_, x) : xs) = x : unzipRight xs
 
-group' :: Eq a => [a] -> [Either a [a]]
+group' :: Eq a => [a] -> [[a]]
 group' [] = []
-group' l  = initItem : group' (drop erl l)
+group' l  = take erl l : group' (drop erl l)
     where
         eqRunLen []  = 0
         eqRunLen [x] = 1
         eqRunLen (x : y : xs)
             | x /= y    = 1
             | otherwise = 1 + eqRunLen (y : xs)
-        erl      = eqRunLen l
-        initItem = if erl == 1 then Left (head l) else Right (take erl l)
+        erl = eqRunLen l
 
 
 pyths :: Integer -> Integer -> [(Integer, Integer, Integer)]
