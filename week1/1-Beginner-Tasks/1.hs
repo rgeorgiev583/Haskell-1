@@ -268,3 +268,8 @@ fibonaccis (x : xs) = fib x 0 1 : fibonaccis xs
             | n == 0    = a
             | n == 1    = b
             | otherwise = fib (n - 1) b (a + b)
+
+
+applyToAll :: (a -> a) -> [a] -> [a]
+applyToAll f []       = []
+applyToAll f (x : xs) = f x : applyToAll f xs
