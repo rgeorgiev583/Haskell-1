@@ -182,3 +182,48 @@ whatZodiacSignIs [_, _, m1, m2, d1, d2, _, _, _, _]
                 | otherwise = mr
             d = digitChar d1 * 10 + digitChar d2
 whatZodiacSignIs _ = error "Invalid string format: there is no such personal ID number!"
+
+
+concatenateLists :: [a] -> [a] -> [a]
+concatenateLists []       l = l
+concatenateLists (x : xs) l = x : concatenateLists xs l
+
+init' :: [a] -> [a]
+init' []       = error "Cannot get the init of an empty list!"
+init' [_]      = []
+init' (x : xs) = x : init' xs
+
+take' :: Int -> [a] -> [a]
+take' _ []       = []
+take' 0 _        = []
+take' n (x : xs) = x : take' (n - 1) xs
+
+drop' :: Int -> [a] -> [a]
+drop' _ []       = []
+drop' 0 l        = l
+drop' n (_ : xs) = drop' (n - 1) xs
+
+zip' :: [a] -> [b] -> [(a, b)]
+zip' _        []       = []
+zip' []       _        = []
+zip' (x : xs) (y : ys) = (x, y) : zip' xs ys
+
+unzip' :: [(a, b)] -> ([a], [b])
+unzip' l = (unzipLeft l, unzipRight l)
+    where
+        unzipLeft  []            = []
+        unzipLeft  ((x, _) : xs) = x : unzipLeft xs
+        unzipRight []            = []
+        unzipRight ((_, x) : xs) = x : unzipRight xs
+
+group' :: Eq a => [a] -> [Either a [a]]
+group' [] = []
+group' l  = initItem : group' (drop erl l)
+    where
+        eqRunLen []  = 0
+        eqRunLen [x] = 1
+        eqRunLen (x : y : xs)
+            | x /= y    = 1
+            | otherwise = 1 + eqRunLen (y : xs)
+        erl      = eqRunLen l
+        initItem = if erl == 1 then Left (head l) else Right (take erl l)
