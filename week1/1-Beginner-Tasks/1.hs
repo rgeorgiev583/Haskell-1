@@ -111,7 +111,6 @@ product' []       = 1
 product' (x : xs) = x * product' xs
 
 multLists :: Num a => [a] -> [a] -> [a]
-multLists []       []       = []
 multLists _        []       = []
 multLists []       _        = []
 multLists (x : xs) (y : ys) = x * y : multLists xs ys
