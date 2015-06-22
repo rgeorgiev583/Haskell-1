@@ -221,7 +221,7 @@ group' [] = []
 group' l  = take erl l : group' (drop erl l)
     where
         eqRunLen []  = 0
-        eqRunLen [x] = 1
+        eqRunLen [_] = 1
         eqRunLen (x : y : xs)
             | x /= y    = 1
             | otherwise = 1 + eqRunLen (y : xs)
