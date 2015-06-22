@@ -242,3 +242,7 @@ pyths from to
                         sqrtSum = sqrt (fromInteger (a ^ 2 + b ^ 2))
                         c       = truncate sqrtSum
                         isPyth  = fromInteger c == sqrtSum
+
+
+multiplyBy :: Num a => a -> (a -> a)
+multiplyBy n = (* n)
