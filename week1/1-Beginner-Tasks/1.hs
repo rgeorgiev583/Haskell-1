@@ -230,8 +230,8 @@ group' l  = take erl l : group' (drop erl l)
 
 pyths :: Integer -> Integer -> [(Integer, Integer, Integer)]
 pyths from to
-    | from == to + 1 = []
-    | otherwise      = helper from to ++ pyths (from + 1) to
+    | from == to = []
+    | otherwise  = helper from (from + 1) ++ pyths (from + 1) to
         where
             helper a b
                 | c > to    = []
