@@ -216,7 +216,6 @@ unzip' l = (unzipLeft l, unzipRight l)
         unzipRight []            = []
         unzipRight ((_, x) : xs) = x : unzipRight xs
 
--- TODO: Add support for returning a flat list (do not know how to return more than one type.)
 group' :: Eq a => [a] -> [[a]]
 group' [] = []
 group' l  = take' erl l : group' (drop' erl l)
