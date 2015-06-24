@@ -326,10 +326,9 @@ productUsingApply l = reduce (*) 1 l
 concat' :: [[a]] -> [a]
 concat' l = reduce concatenateLists [] l
 
--- TODO: Fix it to match the sample tests!
 reduce' :: (a -> a -> a) -> a -> [a] -> a
-reduce' f s [] = s
-reduce' f s l  = reduce' f (f s (last' l)) (init' l)
+reduce' f s []       = s
+reduce' f s (x : xs) = reduce' f (f x s) xs
 
 -- TODO: Fix it to match the sample tests!
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
