@@ -16,6 +16,8 @@ odd' 7 -> True
 
 BMI is calculated by the following formula -> bmi height weight = weight / (height^2)
 
+Note: `bmi` takes as arguments height in centimeters and weight in kilos.
+
 ```
 bmi 1.5 40 -> 17.8
 ```
@@ -212,7 +214,7 @@ unzip' [("I", "surely"), ("do", "not"), ("like", "you")] -> (["I", "do", "like"]
 ### 36. Grouping
 ```
 group' [1, 1, 2, 2, 1, 1, 3] -> [[1, 1], [2, 2], [1, 1], [3]]
-group' [1..5] -> [1, 2, 3, 4, 5]
+group' [1..5] -> [[1], [2], [3], [4], [5]]
 ```
 
 ### 37. Generate all pythagorean triples
@@ -278,34 +280,29 @@ odds' [1..10] -> [1,3,5,7,9]
 
 ### 47. Rewrite the functions using filterBy
 
-### 48. Get the product of a list
-```
-product' [1..5] -> 120
-```
-
-### 49. Concatenate the lists
+### 48. Concatenate the lists
 ```
 concat' [[1, 2, 3], [2, 3, 4], []] -> [1,2,3,2,3,4]
 ```
 
 These patterns..
 
-### 50. Reducing!
+### 49. Reducing!
 ```
 let sum'' = reduce (+) 0
 sum'' [1..10] -> 55
 ```
 
-### 51. Reduce in the other direction
+### 50. Reduce in the other direction
 ```
 (reduce (-) 0) [1..5] -> 0-1-2-3-4-5 -> -15
 (reduce' (-) 5) [1..5] -> 1-(2-(3-(4-(5-0)))) -> 3
 ```
 
-### 52. Zip with a function!
+### 51. Zip with a function!
 ```
 let zip'' = zipWith' (++)
-zip'' [1..3] [3..5] -> [(1, 3), (2, 4), (3, 5)]
+zip'' [1..3] [3..5] -> [[1, 3], [2, 4], [3, 5]]
 
 let sums = zipWith' (+)
 sums [1..3] [3..5] -> [4, 6, 8]
