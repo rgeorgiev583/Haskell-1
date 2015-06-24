@@ -20,13 +20,13 @@ isTriangle a b c = a > 0 && b > 0 && c > 0 && a + b > c && b + c > a && a + c > 
 
 perimeter :: RealFloat a => a -> a -> a -> a
 perimeter a b c
-    | not (isTriangle a b c) = error "This is not a triangle!"
-    | otherwise              = a + b + c
+    | isTriangle a b c = a + b + c
+    | otherwise        = error "This is not a triangle!"
 
 area :: RealFloat a => a -> a -> a -> a
 area a b c
-    | not (isTriangle a b c) = error "This is not a triangle!"
-    | otherwise              = sqrt (p * (p - a) * (p - b) * (p - c))
+    | isTriangle a b c = sqrt (p * (p - a) * (p - b) * (p - c))
+    | otherwise        = error "This is not a triangle!"
         where p = (perimeter a b c) / 2
 
 calculate :: RealFloat a => Char -> a -> a -> a
@@ -47,73 +47,66 @@ convert   _     _    _  = error "Unknown currency!"
 
 
 isTriangleList :: RealFloat a => [a] -> Bool
-isTriangleList []        = False
-isTriangleList [a]       = False
-isTriangleList [a, b]    = False
 isTriangleList [a, b, c] = a > 0 && b > 0 && c > 0 && a + b > c && b + c > a && a + c > b
 isTriangleList     _     = False
 
 perimeterList :: RealFloat a => [a] -> a
-perimeterList []       = 0
 perimeterList (x : xs) = x + perimeterList xs
+perimeterList    _     = 0
 
 areaList :: RealFloat a => [a] -> a
 areaList [a, b, c] = sqrt (p * (p - a) * (p - b) * (p - c))
     where p = (perimeter a b c) / 2
-areaList     _     = error "Unknown polygon type!"
+areaList    _      = error "Unknown polygon type!"
 
 
 head' :: [a] -> a
-head' []      = error "Cannot get the head of an empty list!"
 head' (x : _) = x
+head'    _    = error "Cannot get the head of an empty list!"
 
 tail' :: [a] -> [a]
-tail' []       = error "Cannot get the tail of an empty list!"
 tail' (_ : xs) = xs
+tail'    _     = error "Cannot get the tail of an empty list!"
 
 
 last' :: [a] -> a
-last' []       = error "Cannot get the last element of an empty list!"
 last' [x]      = x
 last' (_ : xs) = last' xs
+last'    _     = error "Cannot get the last element of an empty list!"
 
 double :: Num a => [a] -> [a]
-double []       = []
 double (x : xs) = 2 * x : double xs
+double    _     = []
 
 mult :: Num a => a -> [a] -> [a]
-mult _ []       = []
 mult n (x : xs) = n * x : mult n xs
+mult _    _     = []
 
 nth :: Int -> [a] -> a
-nth _ []       = error "Cannot get the n-th element of an empty list!"
 nth 0 (x : _)  = x
 nth n (_ : xs) = nth (n - 1) xs
+nth _    _     = error "Cannot get the n-th element of an empty list!"
 
 member :: Eq a => a -> [a] -> Bool
-member _ [] = False
-member n (x : xs)
-    | n == x    = True
-    | otherwise = member n xs
+member n (x : xs) = n == x || member n xs
+member _    _     = False
 
 isFib :: Integral a => [a] -> Bool
-isFib []               = False
-isFib [_]              = False
-isFib [_, _]           = True
 isFib (x : y : z : xs) = x + y == z && isFib (y : z : xs)
+isFib [_, _]           = True
+isFib   _              = False
 
 sum' :: Num a => [a] -> a
-sum' []       = 0
 sum' (x : xs) = x + sum' xs
+sum'    _     = 0
 
 product' :: Num a => [a] -> a
-product' []       = 1
 product' (x : xs) = x * product' xs
+product'    _     = 1
 
 multLists :: Num a => [a] -> [a] -> [a]
-multLists _        []       = []
-multLists []       _        = []
 multLists (x : xs) (y : ys) = x * y : multLists xs ys
+multLists    _        _     = []
 
 
 number2string :: Int -> String
@@ -185,46 +178,45 @@ whatZodiacSignIs _ = error "Invalid string format: there is no such personal ID 
 
 
 concatenateLists :: [a] -> [a] -> [a]
-concatenateLists []       l = l
 concatenateLists (x : xs) l = x : concatenateLists xs l
+concatenateLists    _     l = l
 
 init' :: [a] -> [a]
-init' []       = error "Cannot get the init of an empty list!"
 init' [_]      = []
 init' (x : xs) = x : init' xs
+init'    _     = error "Cannot get the init of an empty list!"
 
 take' :: Int -> [a] -> [a]
-take' _ []       = []
 take' 0 _        = []
 take' n (x : xs) = x : take' (n - 1) xs
+take' _    _     = []
 
 drop' :: Int -> [a] -> [a]
-drop' _ []       = []
 drop' 0 l        = l
 drop' n (_ : xs) = drop' (n - 1) xs
+drop' _    _     = []
 
 zip' :: [a] -> [b] -> [(a, b)]
-zip' _        []       = []
-zip' []       _        = []
 zip' (x : xs) (y : ys) = (x, y) : zip' xs ys
+zip'    _        _     = []
 
 unzip' :: [(a, b)] -> ([a], [b])
 unzip' l = (unzipLeft l, unzipRight l)
     where
-        unzipLeft  []            = []
         unzipLeft  ((x, _) : xs) = x : unzipLeft xs
-        unzipRight []            = []
+        unzipLeft          _     = []
         unzipRight ((_, x) : xs) = x : unzipRight xs
+        unzipRight         _     = []
 
 group' :: Eq a => [a] -> [[a]]
 group' [] = []
 group' l  = take' erl l : group' (drop' erl l)
     where
-        eqRunLen []  = 0
         eqRunLen [_] = 1
         eqRunLen (x : y : xs)
             | x /= y    = 1
             | otherwise = 1 + eqRunLen (y : xs)
+        eqRunLen  _  = 0
         erl = eqRunLen l
 
 
@@ -248,30 +240,30 @@ multiplyBy n = (* n)
 
 
 lastDigits :: Integral a => [a] -> [a]
-lastDigits []       = []
 lastDigits (x : xs) = x `mod` 10 : lastDigits xs
+lastDigits    _     = []
 
 stringsToIntegers :: [String] -> [Int]
-stringsToIntegers []       = []
 stringsToIntegers (x : xs) = string2number x : stringsToIntegers xs
+stringsToIntegers    _     = []
 
 stringsToIntegers' :: [String] -> [Int]
-stringsToIntegers' []       = []
 stringsToIntegers' (x : xs) = (read x :: Int) : stringsToIntegers' xs
+stringsToIntegers'    _     = []
 
 fibonaccis :: Integral a => [a] -> [a]
-fibonaccis []       = []
 fibonaccis (x : xs) = fib x 0 1 : fibonaccis xs
     where
         fib n a b
             | n == 0    = a
             | n == 1    = b
             | otherwise = fib (n - 1) b (a + b)
+fibonaccis    _     = []
 
 
 applyToAll :: (a -> b) -> [a] -> [b]
-applyToAll f []       = []
 applyToAll f (x : xs) = f x : applyToAll f xs
+applyToAll f    _     = []
 
 lastDigitsUsingMap :: Integral a => [a] -> [a]
 lastDigitsUsingMap l = applyToAll (`mod` 10) l
@@ -292,22 +284,22 @@ fibonaccisUsingMap l = applyToAll (\x -> fib x 0 1) l
 
 
 odds :: Integral a => [a] -> [a]
-odds [] = []
 odds (x : xs)
     | odd' x     = x : odds xs
     | otherwise  =     odds xs
+odds    _ = []
 
 divisibles :: Integral a => a -> [a] -> [a]
-divisibles n [] = []
 divisibles n (x : xs)
     | x `mod` n == 0 = x : divisibles n xs
     | otherwise      =     divisibles n xs
+divisibles n    _ = []
 
 filterBy :: (a -> Bool) -> [a] -> [a]
-filterBy f [] = []
 filterBy f (x : xs)
     | f x       = x : filterBy f xs
     | otherwise =     filterBy f xs
+filterBy f    _ = []
 
 
 oddsUsingFilter :: Integral a => [a] -> [a]
@@ -317,8 +309,8 @@ divisiblesUsingFilter :: Integral a => a -> [a] -> [a]
 divisiblesUsingFilter n l = filterBy (\x -> x `mod` n == 0) l
 
 reduce :: (a -> a -> a) -> a -> [a] -> a
-reduce f s []       = s
 reduce f s (x : xs) = reduce f (f s x) xs
+reduce f s    _     = s
 
 productUsingApply :: Num a => [a] -> a
 productUsingApply l = reduce (*) 1 l
@@ -327,8 +319,8 @@ concat' :: [[a]] -> [a]
 concat' l = reduce concatenateLists [] l
 
 reduce' :: (a -> a -> a) -> a -> [a] -> a
-reduce' f s []       = s
 reduce' f s (x : xs) = reduce' f (f x s) xs
+reduce' f s    _     = s
 
 -- TODO: Fix it to match the sample tests!
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
