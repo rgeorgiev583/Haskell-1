@@ -9,8 +9,8 @@ quicksort (x : xs) = quicksort l ++ [x] ++ quicksort r
     where
         l = less    x xs
         r = greater x xs
-        less    n l = filter' (\x -> x < n) l
-        greater n l = filter' (\x -> x > n) l
+        less    n l = filter' (< n) l
+        greater n l = filter' (> n) l
 quicksort    _     = []
 
 repeat' :: a -> [a]
@@ -44,10 +44,10 @@ localMaxima (x : y : z : xs)
 localMaxima        _ = []
 
 mapMap :: (a -> b) -> [[a]] -> [[b]]
-mapMap f l = map' (\x -> map' f x) l
+mapMap f l = map' (map' f) l
 
 filterFilter :: (a -> Bool) -> [[a]] -> [[a]]
-filterFilter f l = map' (\x -> filter' f x) l
+filterFilter f l = map' (filter' f) l
 
 unit :: Int -> Int -> [[Int]]
 unit x n = map' helper [0 .. n - 1]
@@ -79,10 +79,10 @@ sumMatrices'    _        _     = []
 --zipWith' f    _        _     = []
 
 zipZipWith :: (a -> b -> c) -> [[a]] -> [[b]] -> [[c]]
-zipZipWith f ll lr = zipWith (\x y -> zipWith f x y) ll lr
+zipZipWith f ll lr = zipWith (zipWith f) ll lr
 
 --zipZip :: [[a]] -> [[b]] -> [[(a, b)]]
---zipZip m1 m2 = zipZipWith (\x y -> (x, y)) m1 m2
+--zipZip m1 m2 = zipZipWith (,) m1 m2
 
 sumMatrices :: Num a => [[a]] -> [[a]] -> [[a]]
 sumMatrices m1 m2 = zipZipWith (+) m1 m2
