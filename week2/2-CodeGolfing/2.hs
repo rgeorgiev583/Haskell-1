@@ -27,20 +27,19 @@ cycle' (x : xs) = x : cycle' (xs ++ [x])
 cycle'' :: [a] -> [a]
 cycle'' l = foldl (++) [] (repeat' l)
 
---TODO: Implement it using foldl.
 every :: Int -> [a] -> [a]
-every n l = helper n 0 l
+every n l = map snd (filter' (\x -> fst x `mod` n == 0) (zip [1 ..] l))
+
+every' :: Int -> [a] -> [a]
+every' n l = foldl (\a x -> if fst x `mod` n == 0 then a ++ [snd x] else a) [] (zip [1 ..] l)
+
+every'' :: Int -> [a] -> [a]
+every'' n l = helper n 0 l
     where
         helper 0 m (x : xs) = []
         helper 1 m (x : xs) = x : helper (m + 1) 0       xs
         helper n m (x : xs) =     helper (n - 1) (m + 1) xs
         helper _ _    _     = []
-
-every' :: Int -> [a] -> [a]
-every' n l = map snd (filter' (\x -> fst x `mod` n == 0) (zip [1 ..] l))
-
-every'' :: Int -> [a] -> [a]
-every'' n l = foldl (\a x -> if fst x `mod` n == 0 then a ++ [snd x] else a) [] (zip [1 ..] l)
 
 --TODO: Implement it using foldl.
 localMaxima :: Ord a => [a] -> [a]
