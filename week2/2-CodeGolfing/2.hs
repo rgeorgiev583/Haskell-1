@@ -36,6 +36,12 @@ every n l = helper n 0 l
         helper n m (x : xs) =     helper (n - 1) (m + 1) xs
         helper _ _    _     = []
 
+every' :: Int -> [a] -> [a]
+every' n l = map snd (filter' (\x -> fst x `mod` n == 0) (zip [1 ..] l))
+
+every'' :: Int -> [a] -> [a]
+every'' n l = foldl (\a x -> if fst x `mod` n == 0 then a ++ [snd x] else a) [] (zip [1 ..] l)
+
 --TODO: Implement it using foldl.
 localMaxima :: Ord a => [a] -> [a]
 localMaxima (x : y : z : xs)
