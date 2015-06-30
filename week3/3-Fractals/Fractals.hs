@@ -20,11 +20,11 @@ screen = (600, 600)
 
 -- The part of the fractal we want to see
 window :: (Coordinate, Coordinate)
-window = undefined
+window = ((-1.9, 1.3), (0.7, -1.3))
 
 -- Mapping a pixel to a coordinate
 pixelToCoordinate :: Int -> Int -> (Coordinate, Coordinate) -> Coordinate
-pixelToCoordinate x y ((minx, maxy), (maxx, miny)) = undefined
+pixelToCoordinate x y ((minx, maxy), (maxx, miny)) = (minx + (maxx - minx) * x, miny + (maxy - miny) * y)
 
 -- Implement the formula for Mandelbrot's fractal
 mandelbrot :: Point -- Coordinate for calculation
