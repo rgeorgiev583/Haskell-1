@@ -105,3 +105,29 @@ multMatrices :: Num a => [[a]] -> [[a]] -> [[a]]
 multMatrices m1 m2 = mapMap (\x -> (foldl (+) 0 (zipWith (*) (row (fst x) m1) (col (snd x) m2)))) [[(x, y) | y <- [0 .. length m1 - 1]] | x <- [0 .. length (head m2) - 1]]
 
 --TODO: Histogram (couldn't understand it!)
+
+occurenceCounts :: Eq a => [a] -> [(Int, a)]
+occurenceCounts [] = []
+occurenceCounts l  = ((foldl (\a x -> if x == e then a + 1 else a) 0 l), e) : occurenceCounts (filter (\x -> x /= e) l)
+    where
+        e = head l
+
+maximum' :: Ord a => [a] -> a
+maximum' [] = error "Cannot get the maximum of an empty list!"
+maximum' l  = foldl1 (\a x -> if x > a then x else a) l
+
+maximumPositions :: Eq a => [(Int, a)] -> [Bool]
+maximumPositions l = map (\x -> fst x == maximumValue) l
+    where
+        maximumValue = maximum' (map fst l)
+
+histogram :: (Eq a, Show a) => [a] -> String
+histogram l = helper (occurenceCounts l)
+    where
+        helper l
+            | null line = foldl (\a x -> a ++ show x ++ " ") "" (map snd l)
+            | otherwise = line ++ "\n" ++ helper (map (\x -> if fst x then (fst (snd x) - 1, snd (snd x)) else snd x) (zip maximumPositionList l))
+                where
+                    maximumPositionList = maximumPositions l
+                    line                = foldl (\a x -> if x then a ++ "* " else a ++ "  ") "" maximumPositionList
+
