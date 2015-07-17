@@ -24,16 +24,16 @@ window = ((-1.9, 1.3), (0.7, -1.3))
 
 -- Mapping a pixel to a coordinate
 pixelToCoordinate :: Int -> Int -> (Coordinate, Coordinate) -> Coordinate
-pixelToCoordinate x y ((minx, maxy), (maxx, miny)) = (minx + x * (maxx - minx) / 600, miny + y * (maxy - miny) / 600)
+pixelToCoordinate x y ((minx, maxy), (maxx, miny)) = (minx + fromIntegral x * (maxx - minx) / 600, miny + fromIntegral y * (maxy - miny) / 600)
 
 -- Implement the formula for Mandelbrot's fractal
 mandelbrot :: Point -- Coordinate for calculation
            -> Point -- Current z value
            -> Int   -- Number of current iteration
            -> Int   -- Iterations before diverging
-mandelbrot (x0, y0) (x, y) iter
-    | x ^ 2 + y ^ 2 >= 
-mandelbrot c z iter = (fst c) ^ 2 + (snd c) ^ 2 + 
+mandelbrot c z iter
+    | magnitude z >= 2 || iter >= 1000 = iter
+    | otherwise                        = mandelbrot c (z ^ 2 + c) (iter + 1)
 
 -- Returning the number of iterations needed for given
 -- point to diverge
