@@ -1,3 +1,5 @@
+import Debug.Trace
+
 map' :: (a -> b) -> [a] -> [b]
 map' f l = foldl (\a x -> a ++ [f x]) [] l
 
@@ -122,12 +124,12 @@ maximumPositions l = map (\x -> fst x == maximumValue) l
         maximumValue = maximum' (map fst l)
 
 histogram :: (Eq a, Show a) => [a] -> String
-histogram l = helper (occurenceCounts l)
+histogram l = helper (occurenceCounts l) 10
     where
-        helper l
-            | null line = foldl (\a x -> a ++ show x ++ " ") "" (map snd l)
-            | otherwise = line ++ "\n" ++ helper (map (\x -> if fst x then (fst (snd x) - 1, snd (snd x)) else snd x) (zip maximumPositionList l))
+        helper l n
+            | n == 0 || foldl (\a x -> a && fst x == 0) True l = foldl (\a x -> a ++ show x ++ " ") "" (map snd l)
+            | otherwise = line ++ "\n" ++ helper (map (\x -> if fst x then (fst (snd x) - 1, snd (snd x)) else snd x) (zip maximumPositionList l)) (n - 1)
                 where
-                    maximumPositionList = maximumPositions l
+                    maximumPositionList = maximumPositions (trace (show l) l)
                     line                = foldl (\a x -> if x then a ++ "* " else a ++ "  ") "" maximumPositionList
 
