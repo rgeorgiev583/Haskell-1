@@ -6,6 +6,12 @@ import Control.Applicative
 newtype Parser a =
   Parser { parse :: String -> Maybe (a, String) }
 
+first :: Parser Char
+first = Parser f
+  where f :: String -> Maybe (Char, String)
+        f (x : xs) = Just (x, xs)
+        f    _     = Nothing
+
 instance Functor Parser where
   fmap f (Parser p) = undefined
 
