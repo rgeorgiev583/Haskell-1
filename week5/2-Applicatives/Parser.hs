@@ -30,10 +30,7 @@ instance Applicative Parser where
                                              Nothing      -> Nothing
 
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy f = Parser g
-  where g :: String -> Maybe (Char, String)
-        g (x : xs) = if f x then Just (x, xs) else Nothing
-        g    _     = Nothing
+satisfy f = fmap (\x -> if f x then Just (x, xs) else Nothing) first
 
 char :: Char -> Parser Char
 char c = satisfy (== c)
