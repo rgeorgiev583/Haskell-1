@@ -2,7 +2,7 @@ module Parser where
 
 
 import Control.Applicative
---import qualified Control.Arrow as A (first, second)
+import qualified Control.Arrow as A (first, second)
 
 newtype Parser a =
   Parser { parse :: String -> Maybe (a, String) }
@@ -18,7 +18,7 @@ fmapFst f (x, y) = (f x, y)
 
 instance Functor Parser where
   --fmap :: (a -> b) -> Parser a -> Parser b
-  fmap f (Parser p) = Parser $ \s -> fmapFst f <$> p s
+  fmap f (Parser p) = Parser $ \s -> A.first f <$> p s
 
 instance Applicative Parser where
   --pure :: a -> Parser a
