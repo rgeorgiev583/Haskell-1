@@ -2,6 +2,7 @@ module Parser where
 
 
 import Control.Applicative
+--import qualified Control.Arrow as A (first, second)
 
 newtype Parser a =
   Parser { parse :: String -> Maybe (a, String) }
@@ -12,12 +13,21 @@ first = Parser f
         f (x : xs) = Just (x, xs)
         f    _     = Nothing
 
+fmapFst :: (a -> b) -> (a, c) -> (b, c)
+fmapFst f (x, y) = (f x, y)
+
 instance Functor Parser where
-  fmap f (Parser p) = undefined
+  --fmap :: (a -> b) -> Parser a -> Parser b
+  fmap f (Parser p) = Parser $ \s -> fmap (fmapFst f) (p s)
 
 instance Applicative Parser where
-  pure  = undefined
-  (<*>) = undefined
+  --pure :: a -> Parser a
+  pure v = Parser $ \s -> Just (v, s)
+
+  --(<*>) :: Parser (a -> b) -> Parser a -> Parser b
+  Parser p1 <*> Parser p2 = Parser $ \s -> case p1 s of
+                                             Just (f, s') -> fmap (fmapFst f) (p2 s')
+                                             Nothing      -> Nothing
 
 satisfy :: (Char -> Bool) -> Parser Char
 satisfy f = Parser g
