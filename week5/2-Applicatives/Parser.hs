@@ -20,7 +20,10 @@ instance Applicative Parser where
   (<*>) = undefined
 
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy = undefined
+satisfy f = Parser g
+  where g :: String -> Maybe (Char, String)
+        g (x : xs) = if f x then Just (x, xs) else Nothing
+        g    _     = Nothing
 
 char :: Char -> Parser Char
 char = undefined
