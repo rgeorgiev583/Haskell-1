@@ -18,7 +18,7 @@ fmapFst f (x, y) = (f x, y)
 
 instance Functor Parser where
   --fmap :: (a -> b) -> Parser a -> Parser b
-  fmap f (Parser p) = Parser $ \s -> fmap (fmapFst f) (p s)
+  fmap f (Parser p) = Parser $ \s -> fmapFst f <$> p s
 
 instance Applicative Parser where
   --pure :: a -> Parser a
