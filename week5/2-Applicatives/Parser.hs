@@ -26,13 +26,13 @@ satisfy f = Parser g
         g    _     = Nothing
 
 char :: Char -> Parser Char
-char = undefined
+char c = satisfy (== c)
 
 openingBrace :: Parser Char
-openingBrace = undefined
+openingBrace = satisfy (== '(')
 
 closingBrace :: Parser Char
-closingBrace = undefined
+closingBrace = satisfy (== ')')
 
 inBraces :: Parser a -> Parser a
 inBraces p = openingBrace *> p <* closingBrace
