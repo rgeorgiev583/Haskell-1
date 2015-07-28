@@ -2,7 +2,8 @@ module Parser where
 
 
 import Control.Applicative
-import qualified Control.Arrow as A (first, second)
+import qualified Control.Arrow as A (first)
+
 
 newtype Parser a =
   Parser { parse :: String -> Maybe (a, String) }
@@ -46,6 +47,7 @@ closingBrace = satisfy (== ')')
 
 inBraces :: Parser a -> Parser a
 inBraces p = openingBrace *> p <* closingBrace
+
 
 instance Alternative Parser where
   --empty :: Parser a

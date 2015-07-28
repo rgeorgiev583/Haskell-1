@@ -13,15 +13,11 @@ data BTree a = Node a (BTree a) (BTree a) | Leaf a | Nil
 
 ### 03. Simple Parser
 #### Implement the following parser datatype:
-(Check the file [`Parser.hs'](./Parser.hs)
+(Check the file [`Parser.hs'](./Parser.hs))
 
 ```haskell
 newtype Parser a =
   Parser { parse :: String -> Maybe (a, String) }
-
-instance Functor Parser where
-
-instance Applicative Parser where
 
 satisfy :: (Char -> Bool) -> Parser Char
 char :: Char -> Parser Char
@@ -29,6 +25,10 @@ openingBrace :: Parser Char
 closingBrace :: Parser Char
 
 inBraces :: Parser a -> Parser a
+
+instance Functor Parser where
+
+instance Applicative Parser where
 
 instance Alternative Parser where
 

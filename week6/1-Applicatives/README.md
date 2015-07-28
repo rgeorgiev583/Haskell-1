@@ -4,6 +4,13 @@
 ### 01. An expression parser
 #### Now using the already written simple parser, write a statement parser!
 
+##### Note: If you didn't complete the previous tasks, here are some modules you can use:
+* [Interpreter](./Interpreter.hs)
+* [Statement](./Statement.hs)
+* [Parser](./Parser.hs)
+
+Your task is to implement the functions from the [StatementParser](./StatementParser.hs) file.
+
 ```haskell
 interpret :: Parser [Statement]
 ```
@@ -18,7 +25,7 @@ for (var i = 0; i < 10; ++i) {
 ```
 
 ```
-> let content = readFile test
+> content <- readFile "test"
 > parse interpret content
 [Assign "sum" (Val 0), For (Assign "i" (Val 0)) (Op (Var "i") Lt (Val 10)) (Incr "i") (Assign "sum" (Op (Var "sum") Plus (Var "i")))]
 ```
