@@ -1,12 +1,12 @@
 ## Monads
 
-### 01 Instances
+### 01. Instances
 #### Make a monad instances for the following types:
 * `Maybe`
 * `List`
 * `(->)`
 
-### 01. join
+### 02. join
 
 ```haskell
 join :: Monad m => m (m a) -> m a
@@ -17,7 +17,7 @@ join [[1, 2, 3], [2, 3]] -> [1, 2, 3, 2, 3]
 join (+) 21              -> 42
 ```
 
-### 02. sequenceM
+### 03. sequenceM
 
 ```haskell
 sequenceM :: Monad m => [m a] -> m [a]
@@ -28,7 +28,7 @@ sequenceM [[1, 2], [1]]    -> [[1, 1], [2, 1]]
 sequenceM [(+1), (+2)] 4   -> [5, 6]
 ```
 
-### 02. replicateM
+### 04. replicateM
 
 ```haskell
 replicateM :: Monad m => Int -> m a -> m [a]
@@ -39,7 +39,7 @@ replicateM 2 [1, 2]   -> [[1, 1], [1, 2], [2, 1], [2, 2]]
 replicateM 2 (+2) 3   -> [5, 5]
 ```
 
-### 03. filterM
+### 05. filterM
 
 ```haskell
 filterM :: Monad m => (a -> m Bool) -> [a] -> m [a]
@@ -50,7 +50,7 @@ filterM (const [True, True]) [1, 2] -> [[1, 2], [1, 2], [1, 2], [1, 2]]
 filterM (>) [1..10] 8                -> [9, 10] 
 ```
 
-### 04. mapM
+### 06. mapM
 
 ```haskell
 mapMM :: Monad m => (a -> m b) -> [a] -> m [b]
@@ -61,11 +61,11 @@ mapMM (const [True, True]) [1, 2] -> [[True, True], [True, True], [True, True], 
 mapMM (+) [1, 2] 3                -> [4, 5]
 ```
 
-### 04. foldM
+### 07. foldM
 
 ```haskell
 foldM :: Monad m => (a -> b ->  m a) -> a -> [b] ->  m a
 ```
 ```
-foldM (\x y -> Just $ x + y)  [1..9]     -> Just 45
+foldM (\x y -> Just $ x + y) 0 [1..9] -> Just 45
 ```
