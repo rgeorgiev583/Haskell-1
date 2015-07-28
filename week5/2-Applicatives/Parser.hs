@@ -48,8 +48,11 @@ inBraces :: Parser a -> Parser a
 inBraces p = openingBrace *> p <* closingBrace
 
 instance Alternative Parser where
-  empty = undefined
-  (<|>) = undefined
+  --empty :: Parser a
+  empty = Parser $ const Nothing
+
+  --(<|>) :: Parser a -> Parser a -> Parser a
+  Parser p1 <|> Parser p2 = Parser $ \s -> p1 s <|> p2 s
 
 oneOrMore, zeroOrMore  :: Parser a -> Parser [a]
 oneOrMore = undefined
