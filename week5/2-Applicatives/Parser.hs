@@ -36,7 +36,7 @@ satisfy f = Parser g
         g    _     = Nothing
 
 char :: Char -> Parser Char
-char c = satisfy (== c)
+char = satisfy . (==)
 
 openingBrace :: Parser Char
 openingBrace = satisfy (== '(')
