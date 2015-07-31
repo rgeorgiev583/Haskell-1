@@ -16,3 +16,7 @@ replicateM n x = x >>= \y -> replicateM (n - 1) x >>= \l -> return (y : l)
 filterM :: Monad m => (a -> m Bool) -> [a] -> m [a]
 filterM f (x : xs) = f x >>= \y -> filterM f xs >>= \l -> if y then return (x : l) else return l
 filterM f    _     = return []
+
+mapMM :: Monad m => (a -> m b) -> [a] -> m [b]
+mapMM f (x : xs) = f x >>= \y -> mapMM f xs >>= \l -> return (y : l)
+mapMM f    _     = return []
