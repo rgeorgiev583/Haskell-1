@@ -12,3 +12,7 @@ sequenceM    _     = return []
 replicateM :: Monad m => Int -> m a -> m [a]
 replicateM 0 x = return []
 replicateM n x = x >>= \y -> replicateM (n - 1) x >>= \l -> return (y : l)
+
+filterM :: Monad m => (a -> m Bool) -> [a] -> m [a]
+filterM f (x : xs) = f x >>= \y -> filterM f xs >>= \l -> if y then return (x : l) else return l
+filterM f    _     = return []
