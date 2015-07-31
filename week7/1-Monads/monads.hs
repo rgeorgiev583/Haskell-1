@@ -32,3 +32,10 @@ instance Monad List where
   --(>>=) :: List a -> (a -> List b) -> List b
   Empty     >>= _ = Empty
   Cons x xs >>= f = append (f x) (foldlList (\a x -> append a x) Empty (mapList f xs))
+
+instance Monad ((->) r) where
+  --return :: a -> (r -> a)
+  return x = const x
+
+  --(>>=) :: (r -> a) -> (a -> (r -> b)) -> (r -> b)
+  f >>= g = f . g
