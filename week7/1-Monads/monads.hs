@@ -11,10 +11,10 @@ instance Applicative Maybe' where
   (<*>) = ap
 
 instance Monad Maybe' where
-  --return :: a -> m a
+  --return :: a -> Maybe' a
   return x = Just' x
 
-  --(>>=) :: m a -> (a -> m b) -> m b
+  --(>>=) :: Maybe' a -> (a -> Maybe' b) -> Maybe' b
   Nothing' >>= _ = Nothing'
   Just' x  >>= f = f x
 
