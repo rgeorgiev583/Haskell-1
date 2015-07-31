@@ -20,3 +20,7 @@ filterM f    _     = return []
 mapMM :: Monad m => (a -> m b) -> [a] -> m [b]
 mapMM f (x : xs) = f x >>= \y -> mapMM f xs >>= \l -> return (y : l)
 mapMM f    _     = return []
+
+foldM :: Monad m => (a -> b -> m a) -> a -> [b] -> m a
+foldM f s (x : xs) = foldM f s xs >>= \y -> f y x
+foldM f s    _     = return s
