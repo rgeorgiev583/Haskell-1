@@ -2,7 +2,6 @@ import List
 import Control.Monad
 
 data Maybe' a = Nothing' | Just' a
---data (->) a = 
 
 instance Functor Maybe' where
   fmap = liftM
