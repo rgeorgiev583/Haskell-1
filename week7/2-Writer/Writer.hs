@@ -1,3 +1,5 @@
+module Writer where
+
 import Control.Monad
 
 newtype Writer w a = Writer { runWriter :: (a, w) }
