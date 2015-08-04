@@ -34,8 +34,8 @@ instance Monad List where
   Cons x xs >>= f = append (f x) (foldlList (\a x -> append a x) Empty (mapList f xs))
 
 instance Monad ((->) r) where
-  --return :: a -> (r -> a)
+  --return :: a -> r -> a
   return x = const x
 
-  --(>>=) :: (r -> a) -> (a -> (r -> b)) -> (r -> b)
+  --(>>=) :: (r -> a) -> (a -> (r -> b)) -> r -> b
   f >>= g = f . g
