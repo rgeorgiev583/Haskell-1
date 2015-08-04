@@ -19,7 +19,7 @@ instance Monoid w => Applicative (Writer w) where
     (<*>) = ap
 
 instance Monoid w => Monad (Writer w) where
-    --return :: (a, w) -> Writer w a
+    --return :: a -> Writer w a
     return x = Writer (x, mempty)
 
     --(>>=) :: Writer w a -> (a -> Writer w' b) -> Writer w' b
