@@ -8,4 +8,4 @@ mapWriter f writer = Writer { runWriter = result }
     where result = f (runWriter writer)
 
 tell :: w -> Writer w ()
-tell = Writer { runWriter = ((), w) }
+tell x = Writer { runWriter = ((), x) }
