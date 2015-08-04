@@ -22,5 +22,5 @@ instance Monoid w => Monad (Writer w) where
     --return :: (a, w) -> Writer w a
     return x = Writer (x, mempty)
 
-    --(>>=) :: Writer w a -> (a -> Writer w b) -> Writer w b
-    writer >>= f = f $ fst $ runWriter writer
+    --(>>=) :: Writer w a -> (a -> Writer w' b) -> Writer w' b
+    Writer (a, w) >>= f = let Writer (b, w') = f a in Writer (b, w `mappend` w')
