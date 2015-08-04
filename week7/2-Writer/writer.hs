@@ -4,8 +4,8 @@ execWriter :: Writer w a -> w
 execWriter = snd . runWriter
 
 mapWriter :: ((a, w) -> (b, w')) -> Writer w a -> Writer w' b
-mapWriter f writer = Writer (snd result) (fst result)
+mapWriter f writer = Writer { runWriter = result }
     where result = f (runWriter writer)
 
 tell :: w -> Writer w ()
-tell = 
+tell = Writer { runWriter = ((), w) }
