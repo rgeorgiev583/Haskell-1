@@ -1,5 +1,10 @@
 import Network.HTTP.Conduit (simpleHttp)
-import Data.ByteString.Lazy.Char8 as L
 import Text.HTML.TagSoup
+import Data.ByteString.Lazy.Char8 (unpack)
 
-main = show (fmap parseTags $ simpleHttp =<< getLine)
+isFinished :: [Tag String] -> IO ()
+isFinished [] = putStrLn "Yes."
+isFinished (TagOpen "em" [] : TagText "Note: this book is in progress" : xs) = putStrLn "No."
+isFinished (_ : xs) = isFinished xs
+
+main = isFinished =<< (fmap (\bs -> parseTags $ unpack bs) $ simpleHttp =<< Prelude.getLine)
