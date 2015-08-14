@@ -14,9 +14,6 @@ first = Parser f
         f (x : xs) = Just (x, xs)
         f    _     = Nothing
 
-fmapFst :: (a -> b) -> (a, c) -> (b, c)
-fmapFst f (x, y) = (f x, y)
-
 instance Functor Parser where
   --fmap :: (a -> b) -> Parser a -> Parser b
   fmap f (Parser p) = Parser $ \s -> A.first f <$> p s
@@ -27,7 +24,7 @@ instance Applicative Parser where
 
   --(<*>) :: Parser (a -> b) -> Parser a -> Parser b
   Parser p1 <*> Parser p2 = Parser $ \s -> case p1 s of
-                                             Just (f, s') -> fmap (fmapFst f) (p2 s')
+                                             Just (f, s') -> fmap (A.first f) (p2 s')
                                              Nothing      -> Nothing
 
 satisfy :: (Char -> Bool) -> Parser Char
