@@ -1,7 +1,8 @@
 import Network.HTTP.Conduit (simpleHttp)
 import Text.HTML.TagSoup
 import Data.ByteString.Lazy.Char8 (unpack)
-import Data.Text (strip)
+import Data.Text (strip, pack)
+import qualified Data.Text as T (unpack)
 
 isFinished :: [Tag String] -> Bool
 isFinished [] = True
@@ -15,7 +16,7 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
         helper :: [Tag String] -> String
         helper [] = error "Could not find a closing tag for the TOC `div' element!"
         helper (TagClose "div" : xs) = ""
-        helper (TagOpen "li" [] : TagText entry : xs) = entry ++ "\n" ++ helper xs
+        helper (TagOpen "li" [] : TagText entry : xs) = (T.unpack $ strip $ pack entry) ++ "\n" ++ helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
