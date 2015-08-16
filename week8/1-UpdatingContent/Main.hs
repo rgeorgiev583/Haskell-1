@@ -32,9 +32,9 @@ newLines oldstr newstr = intercalate "\n" $
 main = do
     l <- fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine)
     if isFinished l
-        then putStrLn "Yes.  Finally!"
+        then putStrLn "The book has already been completed.  Finally!"
         else do
-            putStr "No"
+            putStr "The book has not yet been completed"
             doesLastTocFileExist <- doesFileExist "last-toc"
             lastToc <- if doesLastTocFileExist
                 then readFile "last-toc"
@@ -44,5 +44,5 @@ main = do
                 if null tocDiff
                     then putStrLn ", and no new chapters have been added.  Try again later!"
                     else do
-                        putStrLn $ ", but the following chapters have been added:" ++ tocDiff
+                        putStrLn $ ", but the following chapters have been added:\n" ++ tocDiff
                         writeFile "last-toc" toc
