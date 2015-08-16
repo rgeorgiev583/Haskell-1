@@ -12,8 +12,9 @@ fetchToc [] = error "Could not find a `div' element with class name `toc'!"
 fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
     where
         helper :: [Tag String] -> String
-        helper [] = ""
-        helper (TagText entry : xs) = entry ++ "\n" ++ helper xs
+        helper [] = error "Could not find a closing tag for the TOC `div' element!"
+        helper (TagClose "div" : xs) = ""
+        helper (TagText  entry : xs) = entry ++ "\n" ++ helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
