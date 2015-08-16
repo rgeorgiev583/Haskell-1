@@ -34,7 +34,7 @@ main = do
     if isFinished l
         then putStrLn "Yes."
         else do
-            putStrLn "No, the following chapters have been added:"
+            putStrLn "No, but the following chapters have been added:"
             doesLastTocFileExist <- doesFileExist "last-toc"
             lastToc <- if doesLastTocFileExist
                 then readFile "last-toc"
