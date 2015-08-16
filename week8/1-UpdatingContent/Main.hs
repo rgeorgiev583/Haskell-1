@@ -14,7 +14,7 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
         helper :: [Tag String] -> String
         helper [] = error "Could not find a closing tag for the TOC `div' element!"
         helper (TagClose "div" : xs) = ""
-        helper (TagText  entry : xs) = entry ++ "\n" ++ helper xs
+        helper (TagOpen "li" [] : TagText entry : xs) = entry ++ "\n" ++ helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
