@@ -20,8 +20,16 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
+newLines :: String -> String -> String
+newLines oldstr newstr = concat $ drop (length $ lines oldstr) (lines newstr)
+
 main = do
     l <- fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine)
     if isFinished l
         then putStrLn "Yes."
-        else putStrLn "No."
+        else do
+            putStrLn "No, the following chapters have been added:"
+            lastToc <- readFile "last-toc"
+            let toc = fetchToc l in do
+                putStrLn $ newLines lastToc toc
+                writeFile "last-toc" toc
