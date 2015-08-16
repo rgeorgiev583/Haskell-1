@@ -1,6 +1,7 @@
 import Network.HTTP.Conduit (simpleHttp)
 import Text.HTML.TagSoup
 import Data.ByteString.Lazy.Char8 (unpack)
+import Data.Text (strip)
 
 isFinished :: [Tag String] -> Bool
 isFinished [] = True
@@ -18,7 +19,8 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
-main = fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine) >>=
-    \l -> if   isFinished l
-          then putStrLn "Yes."
-          else putStrLn "No."
+main = do
+    l <- fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine)
+    if isFinished l
+        then putStrLn "Yes."
+        else putStrLn "No."
