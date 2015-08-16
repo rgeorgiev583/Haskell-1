@@ -4,6 +4,7 @@ import Data.ByteString.Lazy.Char8 (unpack)
 import Data.Text (strip, pack)
 import qualified Data.Text as T (unpack)
 import Data.List (intercalate)
+import System.Directory (doesFileExist)
 
 isFinished :: [Tag String] -> Bool
 isFinished [] = True
@@ -34,7 +35,10 @@ main = do
         then putStrLn "Yes."
         else do
             putStrLn "No, the following chapters have been added:"
-            lastToc <- readFile "last-toc"
+            doesLastTocFileExist <- doesFileExist "last-toc"
+            lastToc <- if doesLastTocFileExist
+                then readFile "last-toc"
+                else return ""
             let toc = fetchToc l in do
                 putStrLn $ newLines lastToc toc
                 writeFile "last-toc" toc
