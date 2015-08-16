@@ -17,6 +17,7 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
-main = (\l -> if isFinished l then putStrLn "Yes." else putStrLn "No.") =<<
-    (fmap (\bs -> parseTags $ unpack bs) $ simpleHttp =<<
-    Prelude.getLine)
+main = (fmap (\bs -> parseTags $ unpack bs) $ simpleHttp =<< Prelude.getLine) >>=
+    (\l -> if   isFinished l
+           then putStrLn "Yes."
+           else putStrLn "No.")
