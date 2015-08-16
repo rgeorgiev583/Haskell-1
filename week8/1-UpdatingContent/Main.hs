@@ -6,7 +6,8 @@ import qualified Data.Text as T (unpack)
 
 isFinished :: [Tag String] -> Bool
 isFinished [] = True
-isFinished (TagOpen "em" [] : TagText "Note: this book is in progress" : xs) = False
+isFinished (TagOpen "em" [] : TagText "Note: this book is in progress" : xs) =
+    False
 isFinished (_ : xs) = isFinished xs
 
 fetchToc :: [Tag String] -> String
@@ -14,14 +15,17 @@ fetchToc [] = error "Could not find a `div' element with class name `toc'!"
 fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
     where
         helper :: [Tag String] -> String
-        helper [] = error "Could not find a closing tag for the TOC `div' element!"
+        helper [] =
+            error "Could not find a closing tag for the TOC `div' element!"
         helper (TagClose "div" : xs) = ""
-        helper (TagOpen "li" [] : TagText entry : xs) = (T.unpack $ strip $ pack entry) ++ "\n" ++ helper xs
+        helper (TagOpen "li" [] : TagText entry : xs) =
+            (T.unpack $ strip $ pack entry) ++ "\n" ++ helper xs
         helper (_ : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
 newLines :: String -> String -> String
-newLines oldstr newstr = concat $ drop (length $ lines oldstr) (lines newstr)
+newLines oldstr newstr = concat $
+    drop (length $ lines oldstr) (lines newstr)
 
 main = do
     l <- fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine)
