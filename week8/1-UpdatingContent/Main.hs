@@ -3,6 +3,7 @@ import Text.HTML.TagSoup
 import Data.ByteString.Lazy.Char8 (unpack)
 import Data.Text (strip, pack)
 import qualified Data.Text as T (unpack)
+import Data.List (intercalate)
 
 isFinished :: [Tag String] -> Bool
 isFinished [] = True
@@ -24,7 +25,7 @@ fetchToc (TagOpen "div" [("class", "toc")] : xs) = helper xs
 fetchToc (_ : xs) = fetchToc xs
 
 newLines :: String -> String -> String
-newLines oldstr newstr = concat $
+newLines oldstr newstr = intercalate "\n" $
     drop (length $ lines oldstr) (lines newstr)
 
 main = do
