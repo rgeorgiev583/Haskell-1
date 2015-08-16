@@ -32,13 +32,17 @@ newLines oldstr newstr = intercalate "\n" $
 main = do
     l <- fmap (parseTags . unpack) (simpleHttp =<< Prelude.getLine)
     if isFinished l
-        then putStrLn "Yes."
+        then putStrLn "Yes.  Finally!"
         else do
-            putStrLn "No, but the following chapters have been added:"
+            putStr "No"
             doesLastTocFileExist <- doesFileExist "last-toc"
             lastToc <- if doesLastTocFileExist
                 then readFile "last-toc"
                 else return ""
-            let toc = fetchToc l in do
-                putStrLn $ newLines lastToc toc
-                writeFile "last-toc" toc
+            let toc     = fetchToc l
+                tocDiff = newLines lastToc toc in do
+                if null tocDiff
+                    then putStrLn ", and no new chapters have been added.  Try again later!"
+                    else do
+                        putStrLn $ ", but the following chapters have been added:" ++ tocDiff
+                        writeFile "last-toc" toc
